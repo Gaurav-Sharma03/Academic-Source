@@ -4,7 +4,7 @@ import { FaUserPlus } from 'react-icons/fa';
 import { Navigate } from 'react-router-dom';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: process.env.REACT_APP_API_BASE,
 });
 
 const UserRegister = () => {

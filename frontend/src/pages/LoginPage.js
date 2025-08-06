@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FaUser, FaLock, FaUserShield, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: process.env.REACT_APP_API_BASE,
 });
 
 const LoginPage = () => {
