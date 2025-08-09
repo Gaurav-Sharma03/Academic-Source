@@ -1,12 +1,14 @@
-import React from 'react';
+import React from "react";
 
-const UserDashboard = () => {
+import DashboardCards from "../components/UserDashboardCard";
+
+const Dashboard = () => {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold text-blue-600">👤 User Dashboard</h1>
-      <p className="mt-4">Welcome, User! Access your personal university content here.</p>
-    </div>
+    <div>
+       <h2 className="text-2xl font-bold mb-4">Overview</h2>
+       <DashboardCards />
+     </div>
   );
 };
 
-export default UserDashboard;
+export default Dashboard;

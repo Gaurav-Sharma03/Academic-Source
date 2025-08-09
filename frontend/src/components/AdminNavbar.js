@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -11,6 +11,7 @@ const API = axios.create({
 const AdminNavbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [adminName, setAdminName] = useState('Admin');
+  const dropdownRef = useRef();
 
   useEffect(() => {
     const fetchAdmin = async () => {
@@ -25,34 +26,45 @@ const AdminNavbar = () => {
         console.error('Failed to fetch admin info', err);
       }
     };
-
     fetchAdmin();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md px-6 py-4 relative z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Centered Title */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 text-center">
-          <h1 className="text-xl sm:text-2xl font-extrabold text-blue-700 dark:text-white tracking-tight">
+    <header className="bg-white dark:bg-gray-900 shadow-md px-4 py-3 sm:px-6 w-full">
+      <div className="flex items-center justify-between flex-wrap max-w-7xl mx-auto">
+        {/* Logo & Title */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+          <h1 className="text-lg sm:text-2xl font-extrabold items-center text-blue-700 dark:text-white">
             🎓 Academic Source
           </h1>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Admin Dashboard</p>
+        
         </div>
 
-        {/* Right: Admin Info */}
-        <div className="ml-auto relative flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300">
-          <span className="hidden sm:inline font-medium">Hi, {adminName}</span>
+        {/* User Profile */}
+        <div className="relative flex items-center gap-2 sm:gap-3 mt-2 sm:mt-0" ref={dropdownRef}>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+            Hi, {adminName}
+          </span>
           <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="focus:outline-none"
+            onClick={() => setDropdownOpen((prev) => !prev)}
+            className="text-xl text-blue-600 dark:text-white focus:outline-none"
+            aria-label="User menu"
           >
-            <FaUserCircle className="text-2xl text-blue-600 dark:text-white cursor-pointer" />
+            <FaUserCircle />
           </button>
 
-          {/* Dropdown */}
           {dropdownOpen && (
-            <div className="absolute top-12 right-0 w-44 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg animate-fade-in z-50">
+            <div className="absolute right-0 top-12 w-44 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-50 animate-fade-in">
               <Link
                 to="/admin/logout"
                 onClick={() => setDropdownOpen(false)}
@@ -69,4 +81,4 @@ const AdminNavbar = () => {
   );
 };
 
-export default AdminNavbar;
+export default AdminNavbar; 

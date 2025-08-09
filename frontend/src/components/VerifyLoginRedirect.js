@@ -11,9 +11,9 @@ const VerifyLoginRedirect = () => {
     if (role === 'admin') {
       navigate('/admin'); // 🔐 protected inside App.js
     } else if (role === 'authority') {
-      navigate('/authority-pages/AuthorityDashboard');
+      navigate('/authority');
     } else if (role === 'user') {
-      navigate('/user-pages/UserDashboard');
+      navigate('/user');
     } else {
       navigate('/login'); // fallback if token/role is invalid
     }

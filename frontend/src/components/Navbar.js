@@ -17,7 +17,7 @@ const Navbar = () => {
   }, [darkMode]);
 
   const NavLinks = ({ isMobile = false }) => (
-    <div className={`flex ${isMobile ? 'flex-col gap-3 pt-3' : 'gap-6 items-center'}`}>
+    <div className={`flex ${isMobile ? 'flex-col gap-4 pt-4' : 'gap-6 items-center'}`}>
       <Link to="/" className="hover:text-blue-500 transition">Home</Link>
       <Link to="/aboutus" className="hover:text-blue-500 transition">About Us</Link>
       <Link to="/universities" className="hover:text-blue-500 transition">Universities</Link>
@@ -25,13 +25,13 @@ const Navbar = () => {
       <Link to="/books" className="hover:text-blue-500 transition">Books</Link>
       <Link to="/eplatform" className="hover:text-blue-500 transition">E-Resources</Link>
       <Link to="/trusted" className="hover:text-blue-500 transition">Trusted People</Link>
-       <Link to="/login" className="hover:text-blue-500 transition">Login</Link>
+      <Link to="/login" className="hover:text-blue-500 transition">Login</Link>
 
       {/* Theme toggle */}
       <button
         onClick={() => setDarkMode(!darkMode)}
+        aria-label="Toggle Theme"
         className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
-        title="Toggle Theme"
       >
         {darkMode ? <Sun size={18} /> : <Moon size={18} />}
       </button>
@@ -43,14 +43,14 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Logo & Title */}
-          <Link to="/" className="flex items-center gap-3 sm:gap-4">
+          <Link to="/" className="flex items-center gap-2 sm:gap-4">
             <img
               src={AcademicSourceLogo}
               alt="Academic Source Logo"
-              className="h-12 sm:h-14 w-auto object-contain"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
-            <div className="leading-tight text-left">
-              <span className="text-lg sm:text-xl font-extrabold text-blue-600 dark:text-blue-400 tracking-wide">
+            <div className="leading-tight text-left hidden sm:block">
+              <span className="text-base sm:text-xl font-extrabold text-blue-600 dark:text-blue-400 tracking-wide">
                 Academic Source
               </span>
               <p className="text-xs text-gray-500 dark:text-gray-300">
@@ -59,15 +59,16 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex">
             <NavLinks />
           </nav>
 
-          {/* Mobile Toggle */}
+          {/* Mobile Menu Toggle */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle Menu"
               className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
             >
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -78,7 +79,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {menuOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 px-4 pb-4 border-t dark:border-gray-800">
+        <div className="md:hidden bg-white dark:bg-gray-900 px-6 py-4 border-t border-gray-300 dark:border-gray-800">
           <NavLinks isMobile />
         </div>
       )}

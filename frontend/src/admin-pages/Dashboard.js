@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardCards from '../components/DashboardCards';
+import DashboardCards from '../components/AdminDashboardCards';
 
 const Dashboard = () => (
   <div>

@@ -8,6 +8,9 @@ import NotFound from './pages/NotFound';
 // Authentication middleware
 import ProtectedRoute from './components/ProtectedRoute';
 
+// Import from common
+import Logout from './common/Logout';
+
 // Admin layout and pages
 import AdminLayout from './components/AdminLayout';
 import Dashboard from './admin-pages/Dashboard';
@@ -20,7 +23,6 @@ import ManageSyllabus from './admin-pages/ManageSyllabus';
 import ManageNotes from './admin-pages/ManageNotes';
 import UploadResources from './admin-pages/UploadResources';
 import AdminBooks from './admin-pages/AdminBooks';
-import Logout from './admin-pages/Logout';
 import AdminRegister from './admin-pages/AdminRegister';
 import AuthorityRegister from './admin-pages/AuthorityRegister';
 
@@ -64,11 +66,12 @@ const App = () => {
           <Route path="logout" element={<Logout />} />
           <Route path="register-admin" element={<AdminRegister />} />
           <Route path="register-authority" element={<AuthorityRegister />} />
+          <Route path="logout" element={<Logout />} />
         </Route>
 
         {/* 🔐 Authority Protected Routes */}
         <Route
-          path="/authority-page"
+          path="/authority"
           element={
             <ProtectedRoute allowedRoles={['authority']}>
               <AuthorityLayout />
@@ -77,11 +80,12 @@ const App = () => {
         >
           <Route index element={<AuthorityDashboard />} />
           <Route path="profile" element={<AuthorityProfile />} />
+          <Route path="logout" element={<Logout />} />
         </Route>
 
         {/* 🔐 User Protected Routes */}
         <Route
-          path="/user-page"
+          path="/user"
           element={
             <ProtectedRoute allowedRoles={['user']}>
               <UserLayout />
@@ -90,6 +94,7 @@ const App = () => {
         >
           <Route index element={<UserDashboard />} />
           <Route path="profile" element={<UserProfile />} />
+          <Route path="logout" element={<Logout />} />
         </Route>
 
         {/* 🚫 Fallback */}

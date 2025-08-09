@@ -16,6 +16,7 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // ✅ loading state
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,6 +26,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // ✅ start loading
 
     try {
       const res = await API.post('/api/login', formData);
@@ -33,11 +35,13 @@ const LoginPage = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
 
-      // 🔁 Use role-based redirect page
       navigate('/verify-login');
     } catch (err) {
-      const message = err.response?.data?.error || 'Login failed. Please try again.';
+      const message =
+        err.response?.data?.error || 'Login failed. Please try again.';
       setError(message);
+    } finally {
+      setLoading(false); // ✅ stop loading
     }
   };
 
@@ -126,7 +130,9 @@ const LoginPage = () => {
               onChange={handleChange}
               className="w-full pl-10 py-2 border rounded dark:bg-gray-700 dark:text-white"
             >
-              <option value="" disabled>Select Role</option>
+              <option value="" disabled>
+                Select Role
+              </option>
               <option value="user">User</option>
               <option value="admin">Admin</option>
               <option value="authority">Authority</option>
@@ -137,10 +143,22 @@ const LoginPage = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition"
+          disabled={loading} // ✅ disable when loading
+          className={`w-full py-2 rounded transition ${
+            loading
+              ? 'bg-blue-400 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700'
+          } text-white`}
         >
-          Login
+          {loading ? 'Logging in...' : 'Login'}
         </button>
+
+        {/* Loading note */}
+        {loading && (
+          <p className="text-sm text-gray-500 mt-2 text-center">
+            Please wait, logging in...
+          </p>
+        )}
 
         {/* Registration Link */}
         <p className="text-sm text-center mt-4 text-gray-600 dark:text-gray-300">
